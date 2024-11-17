@@ -1,12 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MenuPrincipal from "./components/MenuPrincipal";
-import CadastroLivros from "./pages/CadastroLivros";
-import BuscaLivros from "./pages/BuscaLivros";
-import GerenciamentoUsuarios from "./pages/GerenciamentoUsuarios";
-import ControleEmprestimos from "./pages/ControleEmprestimos";
-import BookList from './components/BookList';
 import React, { useState } from 'react';
 import BookForm from './components/BookForm';
+import BookList from './components/BookList';
 import UserRegistration from './components/UserRegistration';
 import UserList from './components/UserList';
 import LoanForm from './components/LoanForm';
@@ -41,23 +35,26 @@ function App() {
   const livrosFiltrados = livros.filter((livro) =>
     livro.titulo.toLowerCase().includes(busca.toLowerCase()) ||
     livro.autor.toLowerCase().includes(busca.toLowerCase())
-  );	
-	
+  );
+
   return (
-    <Router>
-	<div className="App">
+    <div className="App">
       <h1>Biblioteca Virtual</h1>
-	</div>  
-    
-      <MenuPrincipal />
-      <Routes>
-        <Route path="/" element={<h1>Bem-vindo à Biblioteca Virtual</h1>} />
-        <Route path="/cadastro-livros" element={<CadastroLivros />} />
-        <Route path="/busca-livros" element={<BuscaLivros />} />
-        <Route path="/usuarios" element={<GerenciamentoUsuarios />} />
-        <Route path="/emprestimos" element={<ControleEmprestimos />} />
-      </Routes>
-    </Router>
+      <BookForm adicionarLivro={adicionarLivro} />
+      <input
+        type="text"
+        placeholder="Buscar por título ou autor"
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+      />
+      <BookList livros={livrosFiltrados} />
+	  <h1>Gerenciamento de Usuários</h1>
+      <UserRegistration registrarUsuario={registrarUsuario} />
+      <UserList usuarios={usuarios} />
+	  <h1>Controle de Empréstimos</h1>
+      <LoanForm registrarEmprestimo={registrarEmprestimo} />
+      <LoanList emprestimos={emprestimos} atualizarStatus={atualizarStatus} />
+    </div>
   );
 }
 
