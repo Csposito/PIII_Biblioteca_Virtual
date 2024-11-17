@@ -1,64 +1,44 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MenuPrincipal from "./components/MenuPrincipal";
-import CadastroLivros from "./pages/CadastroLivros";
-import BuscaLivros from "./pages/BuscaLivros";
-import GerenciamentoUsuarios from "./pages/GerenciamentoUsuarios";
-import ControleEmprestimos from "./pages/ControleEmprestimos";
-import BookList from './components/BookList';
-import React, { useState } from 'react';
-import BookForm from './components/BookForm';
-import UserRegistration from './components/UserRegistration';
-import UserList from './components/UserList';
-import LoanForm from './components/LoanForm';
-import LoanList from './components/LoanList';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import CadastroLivros from './pages/CadastroLivros';
+import GerenciamentoUsuarios from './pages/GerenciamentoUsuarios';
+import ControleEmprestimos from './pages/ControleEmprestimos';
 
-function App() {
-  const [livros, setLivros] = useState([]);
-  const [busca, setBusca] = useState('');
-  const [usuarios, setUsuarios] = useState([]);
-  const [emprestimos, setEmprestimos] = useState([]);
-
-  const registrarEmprestimo = (emprestimo) => {
-    setEmprestimos([...emprestimos, emprestimo]);
-  };
-
-  const atualizarStatus = (id) => {
-    setEmprestimos(
-      emprestimos.map((e) =>
-        e.id === id ? { ...e, status: 'Devolvido' } : e
-      )
-    );
-  };
-
-  const registrarUsuario = (usuario) => {
-    setUsuarios([...usuarios, usuario]);
-  };
-
-  const adicionarLivro = (livro) => {
-    setLivros([...livros, livro]);
-  };
-
-  const livrosFiltrados = livros.filter((livro) =>
-    livro.titulo.toLowerCase().includes(busca.toLowerCase()) ||
-    livro.autor.toLowerCase().includes(busca.toLowerCase())
-  );	
-	
+const App = () => {
   return (
     <Router>
-	<div className="App">
-      <h1>Biblioteca Virtual</h1>
-	</div>  
-    
-      <MenuPrincipal />
-      <Routes>
-        <Route path="/" element={<h1>Bem-vindo à Biblioteca Virtual</h1>} />
-        <Route path="/cadastro-livros" element={<CadastroLivros />} />
-        <Route path="/busca-livros" element={<BuscaLivros />} />
-        <Route path="/usuarios" element={<GerenciamentoUsuarios />} />
-        <Route path="/emprestimos" element={<ControleEmprestimos />} />
-      </Routes>
+      <div style={{ fontFamily: 'Arial, sans-serif', margin: '0 auto', maxWidth: '1200px' }}>
+        <header style={{ background: '#0073e6', padding: '10px' }}>
+          <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h1 style={{ color: '#fff' }}>Biblioteca Virtual</h1>
+            <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0 }}>
+              <li>
+                <Link to="/" style={{ color: '#fff', textDecoration: 'none' }}>Home</Link>
+              </li>
+              <li>
+                <Link to="/cadastro-livros" style={{ color: '#fff', textDecoration: 'none' }}>Cadastro de Livros</Link>
+              </li>
+              <li>
+                <Link to="/gerenciamento-usuarios" style={{ color: '#fff', textDecoration: 'none' }}>Gerenciamento de Usuários</Link>
+              </li>
+              <li>
+                <Link to="/controle-emprestimos" style={{ color: '#fff', textDecoration: 'none' }}>Controle de Empréstimos</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+
+        <main style={{ padding: '20px' }}>
+          <Routes>
+            <Route path="/" element={<h2>Bem-vindo à Biblioteca Virtual</h2>} />
+            <Route path="/cadastro-livros" element={<CadastroLivros />} />
+            <Route path="/gerenciamento-usuarios" element={<GerenciamentoUsuarios />} />
+            <Route path="/controle-emprestimos" element={<ControleEmprestimos />} />
+          </Routes>
+        </main>
+      </div>
     </Router>
   );
-}
+};
 
 export default App;

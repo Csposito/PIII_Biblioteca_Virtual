@@ -1,17 +1,21 @@
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import LoanForm from '../components/LoanForm';
+import LoanList from '../components/LoanList';
 
-const MenuPrincipal = () => {
+const ControleEmprestimos = () => {
+  const [emprestimos, setEmprestimos] = useState([]);
+
+  const adicionarEmprestimo = (emprestimo) => {
+    setEmprestimos([...emprestimos, emprestimo]);
+  };
+
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Início</Link></li>
-        <li><Link to="/cadastro-livros">Cadastro de Livros</Link></li>
-        <li><Link to="/busca-livros">Busca de Livros</Link></li>
-        <li><Link to="/usuarios">Gerenciamento de Usuários</Link></li>
-        <li><Link to="/emprestimos">Controle de Empréstimos</Link></li>
-      </ul>
-    </nav>
+    <div>
+      <h2>Controle de Empréstimos</h2>
+      <LoanForm adicionarEmprestimo={adicionarEmprestimo} />
+      <LoanList emprestimos={emprestimos} />
+    </div>
   );
 };
 
-export default MenuPrincipal;
+export default ControleEmprestimos;
